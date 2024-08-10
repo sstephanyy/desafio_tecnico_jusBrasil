@@ -73,10 +73,24 @@ Esse é o input esperado que o usuário coloque.
   "tribunal_name": "TJAL"
 }
 ```
--> **Atenção**: O número do processo precisa ser válido e o nome do tribunal só aceita "**TJAL**" ou "**TJCE**". 
+-> **Atenção**: O número do processo precisa ser válido e no nome do tribunal, só é aceito "**TJAL**" ou "**TJCE**". 
 
-### Output esperado:
+### Output esperado dos processos:
+● classe
 
+● área
+
+● assunto
+
+● data de distribuição
+
+● juiz
+
+● valor da ação
+
+● partes do processo
+
+● lista das movimentações (data e movimento)
 
 ## Rodando os Testes
 ### 1. Executar Todos os Testes
