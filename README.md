@@ -48,11 +48,16 @@ No macOS/Linux:
 ### 4. Instale as Dependências
 ```pip install -r requirements.txt```
 
-## Rodando os Projeto
-### 1. Vá até a pasta src
+### 5. Instalando o Playwright
+Instale os navegadores necessários:
+
+```playwright install```
+
+## Rodando o Projeto
+### 1. Primeiro, vá até a pasta src
 ```cd src```
 
-### 2. Em seguida, digite o seguinte comando no terminal:
+### 2. Em seguida, digite o seguinte comando no terminal para iniciar seu servidor do Flask:
 ```python run.py ```
 
 ## Estrutura da Requisição
@@ -61,13 +66,17 @@ Endpoint da API: ```/api/processo```
 Método HTTP: **GET**
 
 ### Corpo da Requisição (JSON):
+Esse é o input esperado que o usuário coloque.
 ```
 {
-  "process_number": "123456789",
+  "process_number": "0710802-55.2018.8.02.0001",
   "tribunal_name": "TJAL"
 }
 ```
 -> **Atenção**: O número do processo precisa ser válido e o nome do tribunal só aceita "**TJAL**" ou "**TJCE**". 
+
+### Output esperado:
+
 
 ## Rodando os Testes
 ### 1. Executar Todos os Testes
