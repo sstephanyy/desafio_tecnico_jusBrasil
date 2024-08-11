@@ -9,9 +9,17 @@ class Tribunal(ABC):
         pass
 
     def extract_parts(self, soup):
-        parts = {"autor": [], "ré": []}
-        table = soup.find("table", {"id": "tableTodasPartes"})
+        parts = {}
+        possible_ids = ["tableTodasPartes", "tablePartesPrincipais"]
+        
+        table = None
+        for table_id in possible_ids:
+            table = soup.find("table", {"id": table_id})
+            if table:
+                break
+        
         if not table:
+            print("Nenhuma tabela de partes encontrada.")
             return parts
         
         rows = table.find_all("tr")
@@ -25,9 +33,11 @@ class Tribunal(ABC):
                     names = [name.strip() for name in names if name.strip()]
                     if role in parts:
                         parts[role].extend(names)
-                    elif role not in parts:
+                    else:
                         parts[role] = names
+        
         return parts
+
 
     def extract_movimentacoes(self, soup):
         movimentacoes = []

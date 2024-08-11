@@ -32,18 +32,20 @@ class TribunalGrau2(ABC):
             
         return movimentacoes
     
-    def extract_parts(self, soup, table_id):
-        parts = {
-            "apelante": [],
-            "apelado": [],
-            "custoslegis": [],
-            "apelada": []
-        }
-    
-        table = soup.find("table", {"id": table_id})
+    def extract_parts(self, soup):
+        parts = {}
+        possible_ids = ["tableTodasPartes", "tablePartesPrincipais"]
+        
+        table = None
+        for table_id in possible_ids:
+            table = soup.find("table", {"id": table_id})
+            if table:
+                break
+        
         if not table:
-            return {role: "não encontrado" for role in parts}
-
+            print("Nenhuma tabela de partes encontrada.")
+            return parts
+        
         rows = table.find_all("tr")
         for row in rows:
             label = row.find("span", {"class": "mensagemExibindo tipoDeParticipacao"})
@@ -55,14 +57,11 @@ class TribunalGrau2(ABC):
                     names = [name.strip() for name in names if name.strip()]
                     if role in parts:
                         parts[role].extend(names)
-
-        for role in parts:
-            if not parts[role]:
-                parts[role] = "Desculpa, esse valor não foi encontrado ou não existe!"
+                    else:
+                        parts[role] = names
         
         return parts
 
-    
 
 
 class TJALGrau2(TribunalGrau2):
@@ -116,7 +115,7 @@ class TJALGrau2(TribunalGrau2):
                     "data_distribuicao": soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}).text.split(" às ")[0] if soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}) else "A data não foi encontrada",
                     "juiz": juiz,
                     "valor_acao": soup.find("div", {"id": "valorAcaoProcesso"}).text.strip() if soup.find("div", {"id": "valorAcaoProcesso"}) else "Valor não encontrado",
-                    "parte_do_processo": self.extract_parts(soup, "tableTodasPartes"),  
+                    "parte_do_processo": self.extract_parts(soup),  
                     "movimentacoes": self.extract_movimentacoes(soup)  
                 }
 
@@ -179,13 +178,13 @@ class TJCEGrau2(TribunalGrau2):
                     "data_distribuicao": soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}).text.split(" às ")[0] if soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}) else "A data não foi encontrada",
                     "juiz": juiz,
                     "valor_acao": soup.find("div", {"id": "valorAcaoProcesso"}).text.strip() if soup.find("div", {"id": "valorAcaoProcesso"}) else "Valor não encontrado",
-                    "parte_do_processo": self.extract_parts(soup, "tablePartesPrincipais"),  
+                    "parte_do_processo": self.extract_parts(soup),  
                     "movimentacoes": self.extract_movimentacoes(soup)  
                 }
 
                 return data
             else:
-                return {"error": "Elemento com id 'processoSelecionado' não encontrado."}
+                return {"error": "Desculpe, processo de grau 2 não existe ou não foi encontrado."}
 
     
 def get_process_data_grau2(process_number, tribunal_name):
