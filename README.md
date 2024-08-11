@@ -1,8 +1,8 @@
-# Desafio Técnico JusBrasil
+# Desafio Técnico JusBrasil 👩‍⚖️
 
-Olá, pessoal da JusBrasil!! Para fazer a parte do scraping desse projeto utilizei o ```Playwright``` para navegar nas páginas e ```BeautifulSoup``` para extrair as informações. Além disso, utilizei o ```Flask``` para criação da API.
+Olá, pessoal da JusBrasil!! Para a parte de scraping deste projeto,  utilizei o ```Playwright``` para navegar nas páginas e ```BeautifulSoup``` para extrair as informações. Além disso, utilizei o ```Flask``` para criação da API.
 
-## Estrutura do Projeto
+##  🗂️ Estrutura do Projeto
 
 ```bash
 desafio_tecnico_jusBrasil/
@@ -29,7 +29,7 @@ desafio_tecnico_jusBrasil/
 └── README.md
 ```
 
-## Configuração do Ambiente
+## ⚙️ Configuração do Ambiente
 ### 1. Clone o Repositório
 ```git clone https://github.com/sstephanyy/desafio_tecnico_jusBrasil.git```
 
@@ -53,12 +53,13 @@ Instale os navegadores necessários:
 
 ```playwright install```
 
-## Rodando o Projeto
+## 🏃 Rodando o Projeto
 ### 1. Primeiro, vá até a pasta src
 ```cd src```
 
 ### 2. Em seguida, digite o seguinte comando no terminal para iniciar seu servidor do Flask:
 ```python run.py ```
+
 
 ## Estrutura da Requisição
 Endpoint da API: ```/api/processo```
@@ -66,33 +67,33 @@ Endpoint da API: ```/api/processo```
 Método HTTP: **GET**
 
 ### Corpo da Requisição (JSON):
-Esse é o input esperado que o usuário coloque.
+Aqui está o formato de input esperado:
 ```
 {
   "process_number": "0710802-55.2018.8.02.0001",
   "tribunal_name": "TJAL"
 }
 ```
--> **Atenção**: O número do processo precisa ser válido e no nome do tribunal, só é aceito "**TJAL**" ou "**TJCE**". 
+-> **Atenção**: O número do processo precisa ser válido, e no campo do nome do tribunal, só são aceitos "**TJAL**" ou "**TJCE**". 
 
 ### Output esperado dos processos:
-● classe
+● 📄 Classe
 
-● área
+● 📂 Área
 
-● assunto
+● 📝 Assunto
 
-● data de distribuição
+● 📅 Data de Distribuição
 
-● juiz
+● 👨‍⚖️ Juiz
 
-● valor da ação
+● 💰 Valor da Ação
 
-● partes do processo
+● 👥 Partes do Processo
 
-● lista das movimentações (data e movimento)
+● 📜 Lista das Movimentações (data e movimento)
 
-## Rodando os Testes
+## 🧪 Rodando os Testes
 ### 1. Executar Todos os Testes
 Para rodar todos os testes do projeto, use o comando:
 ```pytest```
