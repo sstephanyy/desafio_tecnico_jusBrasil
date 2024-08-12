@@ -39,7 +39,7 @@ class Tribunal(ABC):
         return parts
 
 
-    def extract_movimentacoes(self, soup):
+    def extract_movements(self, soup):
         movimentacoes = []
         table = soup.find("tbody", {"id": "tabelaTodasMovimentacoes"})
         if not table:
@@ -73,7 +73,7 @@ class TJAL(Tribunal):
             "juiz": soup.find("span", {"id": "juizProcesso"}).text.strip() if soup.find("span", {"id": "juizProcesso"}) else "Juiz não foi encontrado ou não existe",
             "valor_acao": soup.find("div", {"id": "valorAcaoProcesso"}).text.strip() if soup.find("div", {"id": "valorAcaoProcesso"}) else "Valor da ação não foi encontrado ou não existe",
             "parte_do_processo": self.extract_parts(soup),
-            "movimentacoes": self.extract_movimentacoes(soup)
+            "movimentacoes": self.extract_movements(soup)
         }
         return data
 
@@ -97,7 +97,7 @@ class TJCE(Tribunal):
             "juiz": soup.find("span", {"id": "juizProcesso"}).text.strip() if soup.find("span", {"id": "juizProcesso"}) else "Juiz não encontrado ou não existe",
             "valor_acao": soup.find("div", {"id": "valorAcaoProcesso"}).text.strip() if soup.find("div", {"id": "valorAcaoProcesso"}) else "Valor não encontrado ou não existe",
             "parte_do_processo": self.extract_parts(soup),
-            "movimentacoes": self.extract_movimentacoes(soup)
+            "movimentacoes": self.extract_movements(soup)
         }
         return data
 
