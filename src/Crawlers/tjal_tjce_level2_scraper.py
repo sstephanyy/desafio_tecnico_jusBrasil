@@ -78,11 +78,11 @@ class TJALGrau2(TribunalGrau2):
             foro_numero_unificado = self.get_foro_numero_unificado(num_processo)
 
             page.type('input[name="numeroDigitoAnoUnificado"]', formatted_num_processo)
-            page.wait_for_timeout(2000)
+            page.wait_for_timeout(3000)
 
             page.type('input[name="foroNumeroUnificado"]', foro_numero_unificado)
 
-            with page.expect_navigation(timeout=40000):
+            with page.expect_navigation(timeout=60000):
                 page.click('input[type="submit"]#pbConsultar')
 
             content = page.content()
@@ -92,6 +92,7 @@ class TJALGrau2(TribunalGrau2):
 
             if process_code:
                 process_value = process_code.get('value')
+
                 url_with_process_code = url_tjal_process_page + process_value
                 page.goto(url_with_process_code)
 
@@ -109,20 +110,19 @@ class TJALGrau2(TribunalGrau2):
                             juiz = "Juiz não encontrado ou não existe"
 
                 data = {
-                    "classe": soup.find("div", {"id": "classeProcesso"}).text.strip() if soup.find("div", {"id": "classeProcesso"}) else "Não encontrado",
-                    "area": soup.find("div", {"id": "areaProcesso"}).find("span").text.strip() if soup.find("div", {"id": "areaProcesso"}) else "Não encontrado!",
-                    "assunto": soup.find("div", {"id": "assuntoProcesso"}).text.strip() if soup.find("div", {"id": "assuntoProcesso"}) else "Não encontrado!",
-                    "data_distribuicao": soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}).text.split(" às ")[0] if soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}) else "A data não foi encontrada",
+                    "classe": soup.find("div", {"id": "classeProcesso"}).text.strip() if soup.find("div", {"id": "classeProcesso"}) else "Classe não foi encontrada ou não existe.",
+                    "area": soup.find("div", {"id": "areaProcesso"}).find("span").text.strip() if soup.find("div", {"id": "areaProcesso"}) else "Área não foi encontrada ou não existe.",
+                    "assunto": soup.find("div", {"id": "assuntoProcesso"}).text.strip() if soup.find("div", {"id": "assuntoProcesso"}) else "Assunto não foi encontrado ou não existe.",
+                    "data_distribuicao": soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}).text.split(" às ")[0] if soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}) else "A data não foi encontrada ou não existe.",
                     "juiz": juiz,
-                    "valor_acao": soup.find("div", {"id": "valorAcaoProcesso"}).text.strip() if soup.find("div", {"id": "valorAcaoProcesso"}) else "Valor não encontrado",
+                    "valor_acao": soup.find("div", {"id": "valorAcaoProcesso"}).text.strip() if soup.find("div", {"id": "valorAcaoProcesso"}) else "Valor não encontrado ou não existe",
                     "parte_do_processo": self.extract_parts(soup),  
                     "movimentacoes": self.extract_movimentacoes(soup)  
                 }
 
-                browser.close()
                 return data
             else:
-                return {"error": "Elemento com id 'processoSelecionado' não encontrado."}
+                return {"error": "Desculpe, processo de grau 2 não existe ou não foi encontrado."}
     
 
 
@@ -141,7 +141,7 @@ class TJCEGrau2(TribunalGrau2):
             foro_numero_unificado = self.get_foro_numero_unificado(num_processo)
 
             page.type('input[name="numeroDigitoAnoUnificado"]', formatted_num_processo)
-            page.wait_for_timeout(2000)
+            page.wait_for_timeout(3000)
 
             page.type('input[name="foroNumeroUnificado"]', foro_numero_unificado)
 
@@ -172,12 +172,12 @@ class TJCEGrau2(TribunalGrau2):
                             juiz = "Juiz não encontrado ou não existe"
 
                 data = {
-                    "classe": soup.find("div", {"id": "classeProcesso"}).text.strip() if soup.find("div", {"id": "classeProcesso"}) else "Não encontrado",
-                    "area": soup.find("div", {"id": "areaProcesso"}).find("span").text.strip() if soup.find("div", {"id": "areaProcesso"}) else "Não encontrado!",
-                    "assunto": soup.find("div", {"id": "assuntoProcesso"}).text.strip() if soup.find("div", {"id": "assuntoProcesso"}) else "Não encontrado!",
-                    "data_distribuicao": soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}).text.split(" às ")[0] if soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}) else "A data não foi encontrada",
+                    "classe": soup.find("div", {"id": "classeProcesso"}).text.strip() if soup.find("div", {"id": "classeProcesso"}) else "Classe não foi encontrada ou não existe.",
+                    "area": soup.find("div", {"id": "areaProcesso"}).find("span").text.strip() if soup.find("div", {"id": "areaProcesso"}) else "Área não foi encontrada ou não existe.",
+                    "assunto": soup.find("div", {"id": "assuntoProcesso"}).text.strip() if soup.find("div", {"id": "assuntoProcesso"}) else "Assunto não foi encontrado ou não existe.",
+                    "data_distribuicao": soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}).text.split(" às ")[0] if soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}) else "A data não foi encontrada ou não existe.",
                     "juiz": juiz,
-                    "valor_acao": soup.find("div", {"id": "valorAcaoProcesso"}).text.strip() if soup.find("div", {"id": "valorAcaoProcesso"}) else "Valor não encontrado",
+                    "valor_acao": soup.find("div", {"id": "valorAcaoProcesso"}).text.strip() if soup.find("div", {"id": "valorAcaoProcesso"}) else "Valor não encontrado ou não existe.",
                     "parte_do_processo": self.extract_parts(soup),  
                     "movimentacoes": self.extract_movimentacoes(soup)  
                 }

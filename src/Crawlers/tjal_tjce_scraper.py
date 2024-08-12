@@ -64,13 +64,14 @@ class TJAL(Tribunal):
             raise Exception(f"Erro ao acessar o TJAL: Status {response.status_code}")
         
         soup = BeautifulSoup(response.content, "html.parser")
+        
         data = {
-            "classe": soup.find("span", {"id": "classeProcesso"}).text.strip(),
-            "area": soup.find("div", {"id": "areaProcesso"}).text.strip(),
-            "assunto": soup.find("span", {"id": "assuntoProcesso"}).text.strip(),
-            "data_distribuicao": soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}).text.split(" às ")[0],
-            "juiz": soup.find("span", {"id": "juizProcesso"}).text.strip(),
-            "valor_acao": soup.find("div", {"id": "valorAcaoProcesso"}).text.strip(),
+            "classe": soup.find("span", {"id": "classeProcesso"}).text.strip() if soup.find("span", {"id": "classeProcesso"}) else "Classe não foi encontrada ou não existe",
+            "area": soup.find("div", {"id": "areaProcesso"}).text.strip() if soup.find("div", {"id": "areaProcesso"}) else "Área não foi encontrada ou não existe",
+            "assunto": soup.find("span", {"id": "assuntoProcesso"}).text.strip() if soup.find("span", {"id": "assuntoProcesso"}) else "Assunto não foi encontrado ou não existe",
+            "data_distribuicao": soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}).text.split(" às ")[0] if soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}) else "Data de distribuição não foi encontrada ou não existe",
+            "juiz": soup.find("span", {"id": "juizProcesso"}).text.strip() if soup.find("span", {"id": "juizProcesso"}) else "Juiz não foi encontrado ou não existe",
+            "valor_acao": soup.find("div", {"id": "valorAcaoProcesso"}).text.strip() if soup.find("div", {"id": "valorAcaoProcesso"}) else "Valor da ação não foi encontrado ou não existe",
             "parte_do_processo": self.extract_parts(soup),
             "movimentacoes": self.extract_movimentacoes(soup)
         }
@@ -89,12 +90,12 @@ class TJCE(Tribunal):
         
         soup = BeautifulSoup(content, "html.parser")
         data = {
-            "classe": soup.find("span", {"id": "classeProcesso"}).text.strip() if soup.find("span", {"id": "classeProcesso"}) else "Not found",
-            "area": soup.find("div", {"id": "areaProcesso"}).find("span").text.strip() if soup.find("div", {"id": "areaProcesso"}) else "Not found",
-            "assunto": soup.find("span", {"id": "assuntoProcesso"}).text.strip() if soup.find("span", {"id": "assuntoProcesso"}) else "Not found",
-            "data_distribuicao": soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}).text.split(" às ")[0] if soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}) else "Not found",
-            "juiz": soup.find("span", {"id": "juizProcesso"}).text.strip() if soup.find("span", {"id": "juizProcesso"}) else "Juiz não encontrado",
-            "valor_acao": soup.find("div", {"id": "valorAcaoProcesso"}).text.strip() if soup.find("div", {"id": "valorAcaoProcesso"}) else "Valor não encontrado",
+            "classe": soup.find("span", {"id": "classeProcesso"}).text.strip() if soup.find("span", {"id": "classeProcesso"}) else "Classe não foi encontrada ou não existe",
+            "area": soup.find("div", {"id": "areaProcesso"}).find("span").text.strip() if soup.find("div", {"id": "areaProcesso"}) else "Área não foi encontrada ou não existe",
+            "assunto": soup.find("span", {"id": "assuntoProcesso"}).text.strip() if soup.find("span", {"id": "assuntoProcesso"}) else "Assunto não foi encontrado ou não existe",
+            "data_distribuicao": soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}).text.split(" às ")[0] if soup.find("div", {"id": "dataHoraDistribuicaoProcesso"}) else "Data de distribuição não foi encontrada ou não existe",
+            "juiz": soup.find("span", {"id": "juizProcesso"}).text.strip() if soup.find("span", {"id": "juizProcesso"}) else "Juiz não encontrado ou não existe",
+            "valor_acao": soup.find("div", {"id": "valorAcaoProcesso"}).text.strip() if soup.find("div", {"id": "valorAcaoProcesso"}) else "Valor não encontrado ou não existe",
             "parte_do_processo": self.extract_parts(soup),
             "movimentacoes": self.extract_movimentacoes(soup)
         }
